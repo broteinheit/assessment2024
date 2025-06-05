@@ -24,7 +24,7 @@ const ProjectContextProvider: React.FC<{children?: ReactNode, getProjects?: () =
         }
 
         fetchData();
-    }, [getProjects, getCategories])
+    }, [])
 
     return (
         <ProjectContext.Provider value={{selectedProjectId, setSelectedProjectId, projects, categories}}>
