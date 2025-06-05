@@ -37,7 +37,7 @@ const ProjectSelection = () => {
                 <strong style={{minWidth: '20%'}}>Beschreibung:</strong> <textarea value={selectedProject?.beschreibung}  disabled style={{width: '75%', height: '7rem'}}/>
             </div>
         </div>
-    )
+    );
 };
 
 export default ProjectSelection;

@@ -30,7 +30,7 @@ const ProjectContextProvider: React.FC<{children?: ReactNode, getProjects?: () =
         <ProjectContext.Provider value={{selectedProjectId, setSelectedProjectId, projects, categories}}>
             {children}
         </ProjectContext.Provider>
-    )
+    );
 }
 
 export default ProjectContextProvider;
