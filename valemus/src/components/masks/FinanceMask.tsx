@@ -3,6 +3,7 @@ import { ProjectContext } from "../ProjectContext";
 import { IconButton, Tooltip } from "@mui/material"
 import MessageIcon from '@mui/icons-material/Message';
 import { OpenInNew } from "@mui/icons-material";
+import FinanceModal from "./FinanceModal";
 
 interface Geldeinlage {
     bezeichnung: string,
@@ -16,13 +17,14 @@ interface Geldeinlage {
 const FinanceMask = () => {
     const context = useContext(ProjectContext);
     const [geldeinlagen, setGeldeinalgen] = useState<Geldeinlage[]>([{bezeichnung: "test", kategorie: '65b66262cf9ba9b44faf496a', datum: new Date('2025-06-05'), geldgeber: 'test', betrag: 1000, notizen: '1234'}]);
+    const [modalOpen, setModalOpen] = useState(false);
     
     console.log(context?.categories);
 
     return (
         <div>
             <div>
-                <button>Neue Geldeinlage erfassen</button>
+                <button onClick={() => setModalOpen(true)}>Neue Geldeinlage erfassen</button>
             </div>
             <div>
                 <h3>Erfasste Geldeinlagen</h3>
@@ -55,6 +57,7 @@ const FinanceMask = () => {
                     </tbody>
                 </table>
             </div>
+            <FinanceModal title={"Neue Geldeinlage erfassen"} open={modalOpen} handleClose={() => setModalOpen(false)}/>
         </div>
     );
 }
