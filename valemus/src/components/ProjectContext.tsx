@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 
-interface Project {id: string, name: string, projektleiter: string, beschreibung: string, modifiedAt: Date, modifiedBy: string};
-interface Category {id: string, name: string}
+export interface Project {id: string, name: string, projektleiter: string, beschreibung: string, modifiedAt: Date, modifiedBy: string};
+export interface Category {id: string, name: string}
 
 export interface CommonData {
     selectedProjectId?: string,
@@ -20,7 +20,6 @@ const ProjectContextProvider: React.FC<{children?: ReactNode, getProjects?: () =
     useEffect(() => {
         const fetchData = async () => {
             getProjects && setProjects((await getProjects()).sort((a, b) => a.name.localeCompare(b.name)));
-            if (projects.length > 0) setSelectedProjectId(projects[0].id);
             getCategories && setCategories(await getCategories());
         }
 

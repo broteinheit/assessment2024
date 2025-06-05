@@ -8,11 +8,13 @@ import { fetchJson } from './fetchMockData';
 
 function App() {
   return (
-    <ProjectContextProvider getProjects={() => fetchJson('projekte.json')} getCategories={() => fetchJson('kategorien.json')}>
+    <ProjectContextProvider getProjects={() => fetchJson('projekte.json')} getCategories={() => fetchJson('projekte.json')}>
       <div className="App">
         <Menu/>
-        <ProjectSelection/>
-        <ProjectMask/>
+        <div className='App-body'>
+          <ProjectSelection/>
+          <ProjectMask/>
+        </div>
       </div>
     </ProjectContextProvider>
   );
