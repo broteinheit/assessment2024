@@ -1,20 +1,34 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 
+interface Project {id: string, name: string, projektleiter: string, beschreibung: string, modifiedAt: Date, modifiedBy: string};
+interface Category {id: string, name: string}
 
 export interface CommonData {
-    selectedProject: number,
-    setSelectedProject: (value: number) => void,
-    projects: [],
-    categories: [],
-}
+    selectedProjectId?: string,
+    setSelectedProjectId: (value: string) => void,
+    projects: Project[],
+    categories: Category[],
+};
 
 export const ProjectContext = createContext<CommonData | undefined>(undefined);
 
-const ProjectContextProvider: React.FC<{children?: ReactNode, getProjects?: () => [], getCategories?: () => []}> = ({children, getProjects, getCategories}) => {
-    const [selectedProject, setSelectedProject] = useState<number>(-1);
+const ProjectContextProvider: React.FC<{children?: ReactNode, getProjects?: () => Promise<Project[]>, getCategories?: () => Promise<Category[]>}> = ({children, getProjects, getCategories}) => {
+    const [selectedProjectId, setSelectedProjectId] = useState<string>();
+    const [projects, setProjects] = useState<Project[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            getProjects && setProjects((await getProjects()).sort((a, b) => a.name.localeCompare(b.name)));
+            if (projects.length > 0) setSelectedProjectId(projects[0].id);
+            getCategories && setCategories(await getCategories());
+        }
+
+        fetchData();
+    }, [getProjects, getCategories])
 
     return (
-        <ProjectContext.Provider value={{selectedProject, setSelectedProject, projects: getProjects?.() ?? [], categories: getCategories?.() ?? []}}>
+        <ProjectContext.Provider value={{selectedProjectId, setSelectedProjectId, projects, categories}}>
             {children}
         </ProjectContext.Provider>
     )
